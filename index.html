@@ -1,0 +1,3809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papan Hobbies Cafe - Board Game Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --royal-blue: #003D82;
+            --royal-blue-dark: #002855;
+            --light-blue: #4A90E2;
+            --accent-blue: #7CB3E9;
+            --gold: #FFD700;
+            --gold-dark: #FFC107;
+            --bg-light: #F8F9FA;
+            --bg-white: #FFFFFF;
+            --text-dark: #212121;
+            --text-gray: #757575;
+            --border-gray: #E0E0E0;
+            --success: #4CAF50;
+            --error: #F44336;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Crimson Pro', serif;
+            color: var(--royal-blue);
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.25rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+
+        /* Header & Navigation */
+        .header {
+            background: var(--royal-blue);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 61, 130, 0.15);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--royal-blue-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--royal-blue);
+            border: 2px solid var(--royal-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--royal-blue);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        /* Search & Filter Bar */
+        .search-filter-bar {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--royal-blue);
+            box-shadow: 0 0 0 3px rgba(0, 61, 130, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--royal-blue);
+        }
+
+        /* Game Cards Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0, 61, 130, 0.15);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--royal-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .game-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--gold);
+            color: var(--royal-blue-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .game-content {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--royal-blue);
+        }
+
+        .game-category {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .game-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .game-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .game-description {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .complexity-bar {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .complexity-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-gray);
+        }
+
+        .complexity-dot.active {
+            background: var(--gold);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--bg-light);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .modal-close:hover {
+            background: var(--royal-blue);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .game-detail-header {
+            background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .game-detail-content {
+            padding: 2rem;
+        }
+
+        .game-detail-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-item-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-item-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--royal-blue);
+        }
+
+        /* Booking System */
+        .booking-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .calendar-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .calendar-nav button {
+            background: var(--bg-light);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav button:hover {
+            background: var(--royal-blue);
+            color: white;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .calendar-day.header {
+            font-weight: 600;
+            color: var(--text-gray);
+            cursor: default;
+        }
+
+        .calendar-day.disabled {
+            color: var(--border-gray);
+            cursor: not-allowed;
+        }
+
+        .calendar-day.available:hover {
+            background: var(--bg-light);
+        }
+
+        .calendar-day.selected {
+            background: var(--royal-blue);
+            color: white;
+        }
+
+        .booking-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .time-slot {
+            padding: 0.75rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .time-slot:hover {
+            border-color: var(--royal-blue);
+            background: rgba(0, 61, 130, 0.05);
+        }
+
+        .time-slot.selected {
+            background: var(--royal-blue);
+            color: white;
+            border-color: var(--royal-blue);
+        }
+
+        .time-slot.unavailable {
+            background: var(--bg-light);
+            color: var(--text-gray);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Leaderboard */
+        .leaderboard-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-dark) 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .leaderboard-filters {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .leaderboard-table th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .leaderboard-table tr {
+            border-bottom: 1px solid var(--border-gray);
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-table tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .rank-cell {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--royal-blue);
+        }
+
+        .rank-cell.top-3 {
+            color: var(--gold);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-blue), var(--royal-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--royal-blue);
+            box-shadow: 0 0 0 3px rgba(0, 61, 130, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 61, 130, 0.12);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-gray);
+        }
+
+        .auth-toggle a {
+            color: var(--royal-blue);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* Admin Panel */
+        .admin-nav {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .admin-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            color: var(--royal-blue);
+            background: var(--bg-light);
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--royal-blue);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--royal-blue-dark);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 3000;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--royal-blue);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-summary {
+                position: static;
+            }
+
+            .admin-nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid var(--bg-light);
+            border-top: 3px solid var(--royal-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 { margin-bottom: 2rem; }
+        .mt-2 { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <div class="logo-icon">🎲</div>
+                Papan Hobbies
+            </a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('catalog')">Catalog</a></li>
+                <li><a href="#" onclick="showPage('booking')">Booking</a></li>
+                <li><a href="#" onclick="showPage('leaderboard')">Leaderboard</a></li>
+                <li><a href="#" onclick="showPage('profile')" id="profileLink" style="display: none;">Profile</a></li>
+                <li><a href="#" onclick="showPage('admin')" id="adminLink" style="display: none;">Admin</a></li>
+                <li><a href="#" class="btn btn-primary btn-small" onclick="showPage('auth')" id="authBtn">Login</a></li>
+                <li><a href="#" class="btn btn-primary btn-small" onclick="logout()" id="logoutBtn" style="display: none;">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Content will be dynamically loaded here -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Papan Hobbies Cafe</h4>
+                <p>Board game cafe terbaik di area Lebak Bulus/Depok dengan koleksi 150+ board games.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Kontak</h4>
+                <p>📍 Lebak Bulus/Depok Area<br>
+                📞 +62 XXX-XXXX-XXXX<br>
+                ✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="630a0d050c23130213020d0b0c01010a06104d000c0e">[email&#160;protected]</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Jam Operasional</h4>
+                <p>Senin - Jumat: 14:00 - 23:00<br>
+                Sabtu - Minggu: 10:00 - 24:00</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <p>
+                    <a href="#">Instagram</a><br>
+                    <a href="#">Facebook</a><br>
+                    <a href="#">Twitter</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Papan Hobbies Cafe. All rights reserved.</p>
+            <p id="firebaseStatus" style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.7;">
+                <span id="firebaseIndicator">🔄</span> <span id="firebaseText">Connecting to Firebase...</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modal Container -->
+    <div id="modalContainer"></div>
+
+    <!-- Firebase SDK - Load First -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+    <!-- Main Application Script -->
+    <script>
+        // Check if Firebase SDK loaded
+        if (typeof firebase === 'undefined') {
+            console.warn('⚠️ Firebase SDK not available (normal for local files)');
+            console.log('📱 Running in OFFLINE MODE - All features work with localStorage!');
+        }
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDI5VlrwGKTrx1qfvb38wtZ4zisCExMFow",
+            authDomain: "websitephob.firebaseapp.com",
+            databaseURL: "https://websitephob-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "websitephob",
+            storageBucket: "websitephob.firebasestorage.app",
+            messagingSenderId: "847840010021",
+            appId: "1:847840010021:web:a6af963fe542b71af904cc"
+        };
+
+        // Update Firebase connection status in UI
+        function updateFirebaseStatus(status) {
+            const indicator = document.getElementById('firebaseIndicator');
+            const text = document.getElementById('firebaseText');
+            
+            if (!indicator || !text) {
+                // Elements not yet in DOM, retry after delay
+                setTimeout(() => updateFirebaseStatus(status), 100);
+                return;
+            }
+            
+            switch(status) {
+                case 'connected':
+                    indicator.textContent = '✅';
+                    text.textContent = 'Connected to Firebase';
+                    break;
+                case 'offline':
+                    indicator.textContent = '💾';
+                    text.textContent = 'Offline Mode - All features working locally';
+                    break;
+                case 'syncing':
+                    indicator.textContent = '🔄';
+                    text.textContent = 'Syncing...';
+                    break;
+                default:
+                    indicator.textContent = '🔄';
+                    text.textContent = 'Connecting...';
+            }
+        }
+
+        // Initialize Firebase
+        let firebaseApp, firebaseDb, firebaseAuth;
+        let isFirebaseReady = false;
+
+        try {
+            if (typeof firebase !== 'undefined') {
+                firebaseApp = firebase.initializeApp(firebaseConfig);
+                firebaseDb = firebase.database();
+                firebaseAuth = firebase.auth();
+                isFirebaseReady = true;
+                console.log('✅ Firebase initialized successfully');
+                updateFirebaseStatus('connected');
+            } else {
+                throw new Error('Firebase SDK not available');
+            }
+        } catch (error) {
+            console.warn('⚠️ Firebase initialization skipped:', error.message);
+            console.log('✅ Running in OFFLINE MODE - using localStorage');
+            console.log('💡 To enable Firebase: Deploy to web server or run local HTTP server');
+            updateFirebaseStatus('offline');
+        }
+
+        // Monitor Firebase connection
+        if (isFirebaseReady) {
+            const connectedRef = firebaseDb.ref('.info/connected');
+            connectedRef.on('value', (snapshot) => {
+                if (snapshot.val() === true) {
+                    updateFirebaseStatus('connected');
+                } else {
+                    updateFirebaseStatus('offline');
+                }
+            });
+        }
+
+        // Storage with Firebase + localStorage fallback
+        const Storage = {
+            get(key) {
+                // Try localStorage first for instant response
+                const localData = localStorage.getItem(key);
+                if (localData) {
+                    try {
+                        return JSON.parse(localData);
+                    } catch (e) {
+                        return null;
+                    }
+                }
+                return null;
+            },
+            
+            async set(key, value) {
+                // Save to localStorage immediately
+                localStorage.setItem(key, JSON.stringify(value));
+                
+                // Sync to Firebase in background
+                if (isFirebaseReady) {
+                    try {
+                        await firebaseDb.ref(`data/${key}`).set(value);
+                        console.log(`🔄 Synced ${key} to Firebase`);
+                    } catch (error) {
+                        console.error(`Firebase sync error for ${key}:`, error);
+                    }
+                }
+            },
+            
+            async remove(key) {
+                localStorage.removeItem(key);
+                
+                if (isFirebaseReady) {
+                    try {
+                        await firebaseDb.ref(`data/${key}`).remove();
+                    } catch (error) {
+                        console.error(`Firebase remove error for ${key}:`, error);
+                    }
+                }
+            },
+            
+            // Load data from Firebase (for initial sync)
+            async loadFromFirebase(key) {
+                if (!isFirebaseReady) return null;
+                
+                try {
+                    const snapshot = await firebaseDb.ref(`data/${key}`).once('value');
+                    const data = snapshot.val();
+                    
+                    if (data) {
+                        // Update localStorage with Firebase data
+                        localStorage.setItem(key, JSON.stringify(data));
+                        console.log(`📥 Loaded ${key} from Firebase`);
+                        return data;
+                    }
+                    return null;
+                } catch (error) {
+                    console.error(`Firebase load error for ${key}:`, error);
+                    return null;
+                }
+            },
+            
+            // Sync all data from Firebase
+            async syncAll() {
+                if (!isFirebaseReady) return;
+                
+                try {
+                    const snapshot = await firebaseDb.ref('data').once('value');
+                    const allData = snapshot.val();
+                    
+                    if (allData) {
+                        Object.keys(allData).forEach(key => {
+                            localStorage.setItem(key, JSON.stringify(allData[key]));
+                        });
+                        console.log('✅ All data synced from Firebase');
+                    }
+                } catch (error) {
+                    console.error('Firebase sync all error:', error);
+                }
+            }
+        };
+
+        // Initialize sample data if not exists
+        async function initializeData() {
+            // Sync data from Firebase first
+            if (isFirebaseReady) {
+                console.log('🔄 Syncing data from Firebase...');
+                await Storage.syncAll();
+            }
+            
+            // Force initialize admin account - always ensure admin exists
+            const users = Storage.get('users') || [];
+            const adminEmail = 'papan.hobbies@gmail.com';
+            
+            // Check if admin exists
+            let adminIndex = users.findIndex(u => u.email === adminEmail || u.id === 999999);
+            
+            const adminUser = {
+                id: 999999, // Fixed ID for admin
+                username: 'admin',
+                email: 'papan.hobbies@gmail.com',
+                password: 'PapanHobbies2026!', // Default password - can be changed
+                name: 'Admin Papan Hobbies',
+                role: 'admin',
+                phone: '+62812345678',
+                totalVisits: 0,
+                totalBookings: 0,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (adminIndex === -1) {
+                // Admin doesn't exist, add it
+                users.unshift(adminUser);
+                await Storage.set('users', users);
+                console.log('✅ Admin account created:', adminEmail);
+            } else {
+                // Admin exists, update it to ensure correct structure
+                users[adminIndex] = adminUser;
+                await Storage.set('users', users);
+                console.log('✅ Admin account updated:', adminEmail);
+            }
+            
+            if (!Storage.get('games')) {
+                const sampleGames = [
+                    {
+                        id: 1,
+                        title: 'Wingspan',
+                        category: 'Strategy',
+                        mechanics: ['Card Drafting', 'Engine Building'],
+                        minPlayers: 1,
+                        maxPlayers: 5,
+                        bestPlayerCount: 3,
+                        playTime: 60,
+                        complexity: 3,
+                        description: 'Build your aviary and attract birds in this beautiful engine-building game.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: true,
+                        timesPlayed: 47
+                    },
+                    {
+                        id: 2,
+                        title: 'Azul',
+                        category: 'Abstract',
+                        mechanics: ['Pattern Building', 'Tile Placement'],
+                        minPlayers: 2,
+                        maxPlayers: 4,
+                        bestPlayerCount: 2,
+                        playTime: 40,
+                        complexity: 2,
+                        description: 'Create beautiful tile patterns in this award-winning abstract strategy game.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: true,
+                        timesPlayed: 89
+                    },
+                    {
+                        id: 3,
+                        title: 'Root',
+                        category: 'Strategy',
+                        mechanics: ['Area Control', 'Asymmetric Powers'],
+                        minPlayers: 2,
+                        maxPlayers: 4,
+                        bestPlayerCount: 4,
+                        playTime: 90,
+                        complexity: 4,
+                        description: 'Epic asymmetric woodland warfare game where each faction plays differently.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: false,
+                        timesPlayed: 34
+                    },
+                    {
+                        id: 4,
+                        title: 'Pandemic',
+                        category: 'Cooperative',
+                        mechanics: ['Cooperative Play', 'Set Collection'],
+                        minPlayers: 2,
+                        maxPlayers: 4,
+                        bestPlayerCount: 4,
+                        playTime: 45,
+                        complexity: 3,
+                        description: 'Work together to save humanity from four deadly diseases spreading across the globe.',
+                        availability: 'available',
+                        hasScoring: false,
+                        isFeatured: true,
+                        timesPlayed: 62
+                    },
+                    {
+                        id: 5,
+                        title: '7 Wonders',
+                        category: 'Strategy',
+                        mechanics: ['Card Drafting', 'Civilization'],
+                        minPlayers: 2,
+                        maxPlayers: 7,
+                        bestPlayerCount: 5,
+                        playTime: 30,
+                        complexity: 3,
+                        description: 'Lead one of the seven great cities of the Ancient World to victory.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: false,
+                        timesPlayed: 56
+                    },
+                    {
+                        id: 6,
+                        title: 'Catan',
+                        category: 'Strategy',
+                        mechanics: ['Trading', 'Resource Management'],
+                        minPlayers: 3,
+                        maxPlayers: 4,
+                        bestPlayerCount: 4,
+                        playTime: 90,
+                        complexity: 2,
+                        description: 'Build settlements, trade resources, and become the dominant force on Catan.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: true,
+                        timesPlayed: 78
+                    },
+                    {
+                        id: 7,
+                        title: 'Codenames',
+                        category: 'Party',
+                        mechanics: ['Word Game', 'Team Play'],
+                        minPlayers: 4,
+                        maxPlayers: 8,
+                        bestPlayerCount: 6,
+                        playTime: 15,
+                        complexity: 1,
+                        description: 'Give clever one-word clues to help your team identify secret agents.',
+                        availability: 'available',
+                        hasScoring: false,
+                        isFeatured: false,
+                        timesPlayed: 102
+                    },
+                    {
+                        id: 8,
+                        title: 'Splendor',
+                        category: 'Strategy',
+                        mechanics: ['Engine Building', 'Set Collection'],
+                        minPlayers: 2,
+                        maxPlayers: 4,
+                        bestPlayerCount: 3,
+                        playTime: 30,
+                        complexity: 2,
+                        description: 'Collect gems and build your jewelry empire in Renaissance Europe.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: false,
+                        timesPlayed: 65
+                    },
+                    {
+                        id: 9,
+                        title: 'Ticket to Ride',
+                        category: 'Family',
+                        mechanics: ['Route Building', 'Set Collection'],
+                        minPlayers: 2,
+                        maxPlayers: 5,
+                        bestPlayerCount: 4,
+                        playTime: 60,
+                        complexity: 2,
+                        description: 'Build train routes across North America in this classic family game.',
+                        availability: 'in-use',
+                        hasScoring: true,
+                        isFeatured: true,
+                        timesPlayed: 91
+                    },
+                    {
+                        id: 10,
+                        title: 'Riichi Mahjong',
+                        category: 'Traditional',
+                        mechanics: ['Tile Laying', 'Hand Management'],
+                        minPlayers: 4,
+                        maxPlayers: 4,
+                        bestPlayerCount: 4,
+                        playTime: 90,
+                        complexity: 4,
+                        description: 'Japanese variant of mahjong with complex scoring and competitive play.',
+                        availability: 'available',
+                        hasScoring: true,
+                        isFeatured: true,
+                        timesPlayed: 156
+                    }
+                ];
+                Storage.set('games', sampleGames);
+            }
+
+            if (!Storage.get('leaderboards')) {
+                const sampleLeaderboards = {
+                    1: [ // Wingspan
+                        { userId: 1, playerName: 'Budi Santoso', score: 112, rank: 1, gamesPlayed: 15, winRate: 40 },
+                        { userId: 2, playerName: 'Ani Wijaya', score: 108, rank: 2, gamesPlayed: 12, winRate: 33 },
+                        { userId: 3, playerName: 'Riko Ahmad', score: 105, rank: 3, gamesPlayed: 18, winRate: 28 }
+                    ],
+                    10: [ // Riichi Mahjong
+                        { userId: 4, playerName: 'Dimas Prakoso', score: 45600, rank: 1, gamesPlayed: 45, winRate: 38 },
+                        { userId: 5, playerName: 'Sari Kusuma', score: 42300, rank: 2, gamesPlayed: 38, winRate: 35 },
+                        { userId: 6, playerName: 'Teguh Wahyudi', score: 39800, rank: 3, gamesPlayed: 52, winRate: 29 },
+                        { userId: 7, playerName: 'Linda Permata', score: 37500, rank: 4, gamesPlayed: 41, winRate: 27 }
+                    ]
+                };
+                Storage.set('leaderboards', sampleLeaderboards);
+            }
+
+            if (!Storage.get('bookings')) {
+                Storage.set('bookings', []);
+            }
+
+            if (!Storage.get('users')) {
+                Storage.set('users', [
+                    {
+                        id: 1,
+                        username: 'phob53',
+                        email: 'admin@papanhobbies.com',
+                        password: 'Lebakbuluscafe26',
+                        name: 'Admin Papan Hobbies',
+                        role: 'admin',
+                        phone: '+62812345678',
+                        totalVisits: 0,
+                        totalBookings: 0
+                    }
+                ]);
+            }
+        }
+
+        // Auth State
+        let currentUser = Storage.get('currentUser');
+
+        function updateAuthUI() {
+            const authBtn = document.getElementById('authBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const profileLink = document.getElementById('profileLink');
+            const adminLink = document.getElementById('adminLink');
+
+            if (currentUser) {
+                authBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                profileLink.style.display = 'block';
+                if (currentUser.role === 'admin') {
+                    adminLink.style.display = 'block';
+                }
+            } else {
+                authBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                profileLink.style.display = 'none';
+                adminLink.style.display = 'none';
+            }
+        }
+
+        async function logout() {
+            // Sign out from Firebase
+            if (isFirebaseReady && firebaseAuth.currentUser) {
+                try {
+                    await firebaseAuth.signOut();
+                    console.log('✅ Firebase sign out successful');
+                } catch (error) {
+                    console.error('Firebase sign out error:', error);
+                }
+            }
+            
+            Storage.remove('currentUser');
+            currentUser = null;
+            updateAuthUI();
+            showPage('home');
+            showToast('Berhasil logout', 'success');
+        }
+
+        // Navigation
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function showPage(page) {
+            const mainContent = document.getElementById('mainContent');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('active');
+
+            switch(page) {
+                case 'home':
+                    mainContent.innerHTML = getHomePage();
+                    break;
+                case 'catalog':
+                    mainContent.innerHTML = getCatalogPage();
+                    setupCatalogFilters();
+                    break;
+                case 'booking':
+                    if (!currentUser) {
+                        sessionStorage.setItem('returnPage', 'booking');
+                        mainContent.innerHTML = `
+                            <div class="container">
+                                <div class="auth-container">
+                                    <div class="auth-box" style="max-width: 600px;">
+                                        <div style="text-align: center; margin-bottom: 2rem;">
+                                            <div style="width: 100px; height: 100px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, var(--royal-blue), var(--light-blue)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                                                📅
+                                            </div>
+                                            <h2 style="margin-bottom: 0.5rem;">Login untuk Booking</h2>
+                                            <p style="color: var(--text-gray);">Silakan login atau buat akun untuk melakukan reservasi meja</p>
+                                        </div>
+
+                                        <button onclick="handleGoogleLogin()" class="btn" style="width: 100%; background: white; color: var(--text-dark); border: 2px solid var(--border-gray); display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1rem;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24">
+                                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                            </svg>
+                                            Continue with Google
+                                        </button>
+
+                                        <div style="text-align: center; margin: 1.5rem 0; color: var(--text-gray); position: relative;">
+                                            <span style="background: white; padding: 0 1rem; position: relative; z-index: 1;">atau</span>
+                                            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border-gray); z-index: 0;"></div>
+                                        </div>
+
+                                        <div style="display: flex; gap: 1rem;">
+                                            <button class="btn btn-secondary" style="flex: 1;" onclick="showPage('auth')">
+                                                Login dengan Email
+                                            </button>
+                                            <button class="btn btn-primary" style="flex: 1;" onclick="showRegister()">
+                                                Register
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        return;
+                    }
+                    mainContent.innerHTML = getBookingPage();
+                    initializeCalendar();
+                    break;
+                case 'leaderboard':
+                    mainContent.innerHTML = getLeaderboardPage();
+                    loadLeaderboard(10); // Default: Riichi Mahjong
+                    break;
+                case 'profile':
+                    if (!currentUser) {
+                        showPage('auth');
+                        return;
+                    }
+                    mainContent.innerHTML = getProfilePage();
+                    break;
+                case 'admin':
+                    if (!currentUser || currentUser.role !== 'admin') {
+                        showToast('Akses ditolak', 'error');
+                        showPage('home');
+                        return;
+                    }
+                    mainContent.innerHTML = getAdminPage();
+                    break;
+                case 'auth':
+                    mainContent.innerHTML = getAuthPage();
+                    break;
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✓' : '⚠'}</span>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Pages
+        function getHomePage() {
+            const games = Storage.get('games') || [];
+            const featuredGames = games.filter(g => g.isFeatured).slice(0, 3);
+
+            return `
+                <section class="hero">
+                    <div class="hero-content">
+                        <h1>Welcome to Papan Hobbies</h1>
+                        <p>Board game cafe terbaik di Jakarta Selatan dengan koleksi 150+ board games. Nikmati pengalaman bermain board game bersama teman dan keluarga!</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showPage('catalog')">Browse Games</button>
+                            <button class="btn btn-secondary" onclick="showPage('booking')" style="background: white; color: var(--royal-blue);">Book a Table</button>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Featured Games</h2>
+                        <p>Game-game populer dan paling sering dimainkan</p>
+                    </div>
+
+                    <div class="games-grid">
+                        ${featuredGames.map(game => createGameCard(game)).join('')}
+                    </div>
+
+                    <div class="text-center mt-2">
+                        <button class="btn btn-primary" onclick="showPage('catalog')">Lihat Semua Games →</button>
+                    </div>
+
+                    <div class="section-header mt-2" style="margin-top: 4rem;">
+                        <h2>Why Choose Papan Hobbies?</h2>
+                    </div>
+
+                    <div class="admin-grid">
+                        <div class="stat-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🎲</div>
+                            <div class="stat-value">150+</div>
+                            <div class="stat-label">Board Games Collection</div>
+                        </div>
+                        <div class="stat-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+                            <div class="stat-value">500+</div>
+                            <div class="stat-label">Active Players</div>
+                        </div>
+                        <div class="stat-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">⭐</div>
+                            <div class="stat-value">4.9/5</div>
+                            <div class="stat-label">Customer Rating</div>
+                        </div>
+                        <div class="stat-card">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
+                            <div class="stat-value">7 Days</div>
+                            <div class="stat-label">Open Per Week</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCatalogPage() {
+            const games = Storage.get('games') || [];
+            const categories = [...new Set(games.map(g => g.category))];
+
+            return `
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Game Catalog</h2>
+                        <p>Jelajahi koleksi lengkap board games kami</p>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="searchInput" placeholder="Cari game berdasarkan nama..." oninput="filterGames()">
+                        </div>
+
+                        <div class="filters">
+                            <div class="filter-group">
+                                <label>Kategori</label>
+                                <select id="categoryFilter" onchange="filterGames()">
+                                    <option value="">Semua Kategori</option>
+                                    ${categories.map(cat => `<option value="${cat}">${cat}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Jumlah Pemain</label>
+                                <select id="playersFilter" onchange="filterGames()">
+                                    <option value="">Semua</option>
+                                    <option value="2">2 Players</option>
+                                    <option value="3">3 Players</option>
+                                    <option value="4">4 Players</option>
+                                    <option value="5+">5+ Players</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Kompleksitas</label>
+                                <select id="complexityFilter" onchange="filterGames()">
+                                    <option value="">Semua</option>
+                                    <option value="1">Light (1-2)</option>
+                                    <option value="3">Medium (3)</option>
+                                    <option value="4">Heavy (4-5)</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Availability</label>
+                                <select id="availabilityFilter" onchange="filterGames()">
+                                    <option value="">Semua</option>
+                                    <option value="available">Available</option>
+                                    <option value="in-use">In Use</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="games-grid" id="gamesGrid">
+                        ${games.map(game => createGameCard(game)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function createGameCard(game) {
+            const availabilityText = game.availability === 'available' ? '✓ Available' : '⏳ In Use';
+            const availabilityClass = game.availability === 'available' ? 'success' : 'error';
+
+            return `
+                <div class="game-card" onclick="showGameDetail(${game.id})">
+                    ${game.isFeatured ? '<div class="game-badge">⭐ Featured</div>' : ''}
+                    <div class="game-image">🎲</div>
+                    <div class="game-content">
+                        <h3 class="game-title">${game.title}</h3>
+                        <div class="game-category">${game.category}</div>
+                        <div class="game-meta">
+                            <span>👥 ${game.minPlayers}-${game.maxPlayers}</span>
+                            <span>⏱ ${game.playTime}min</span>
+                        </div>
+                        <div class="complexity-bar">
+                            ${Array(5).fill(0).map((_, i) => 
+                                `<div class="complexity-dot ${i < game.complexity ? 'active' : ''}"></div>`
+                            ).join('')}
+                        </div>
+                        <p class="game-description">${game.description}</p>
+                        <div style="color: var(--${availabilityClass}); font-weight: 600; font-size: 0.9rem;">
+                            ${availabilityText}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterGames() {
+            const games = Storage.get('games') || [];
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const players = document.getElementById('playersFilter').value;
+            const complexity = document.getElementById('complexityFilter').value;
+            const availability = document.getElementById('availabilityFilter').value;
+
+            const filtered = games.filter(game => {
+                const matchSearch = game.title.toLowerCase().includes(searchTerm);
+                const matchCategory = !category || game.category === category;
+                const matchPlayers = !players || (
+                    players === '5+' ? game.maxPlayers >= 5 :
+                    parseInt(players) >= game.minPlayers && parseInt(players) <= game.maxPlayers
+                );
+                const matchComplexity = !complexity || (
+                    complexity === '1' ? game.complexity <= 2 :
+                    complexity === '3' ? game.complexity === 3 :
+                    game.complexity >= 4
+                );
+                const matchAvailability = !availability || game.availability === availability;
+
+                return matchSearch && matchCategory && matchPlayers && matchComplexity && matchAvailability;
+            });
+
+            document.getElementById('gamesGrid').innerHTML = filtered.length > 0 
+                ? filtered.map(game => createGameCard(game)).join('')
+                : '<div class="text-center" style="grid-column: 1/-1; padding: 3rem;"><h3>Tidak ada game yang sesuai dengan filter</h3></div>';
+        }
+
+        function setupCatalogFilters() {
+            // Filters are already set up in the HTML
+        }
+
+        function showGameDetail(gameId) {
+            const games = Storage.get('games') || [];
+            const game = games.find(g => g.id === gameId);
+            if (!game) return;
+
+            const leaderboards = Storage.get('leaderboards') || {};
+            const leaderboard = leaderboards[gameId] || [];
+
+            const modal = document.getElementById('modalContainer');
+            modal.innerHTML = `
+                <div class="modal active" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        
+                        <div class="game-detail-header">
+                            <h1>${game.title}</h1>
+                            <p style="font-size: 1.1rem; opacity: 0.9; margin-top: 0.5rem;">${game.category} • ${game.mechanics.join(', ')}</p>
+                        </div>
+
+                        <div class="game-detail-content">
+                            <div class="game-detail-meta">
+                                <div class="meta-item">
+                                    <div class="meta-item-label">Players</div>
+                                    <div class="meta-item-value">${game.minPlayers}-${game.maxPlayers}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-item-label">Best At</div>
+                                    <div class="meta-item-value">${game.bestPlayerCount}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-item-label">Play Time</div>
+                                    <div class="meta-item-value">${game.playTime}min</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-item-label">Complexity</div>
+                                    <div class="meta-item-value">${game.complexity}/5</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-item-label">Times Played</div>
+                                    <div class="meta-item-value">${game.timesPlayed}</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-item-label">Status</div>
+                                    <div class="meta-item-value" style="color: ${game.availability === 'available' ? 'var(--success)' : 'var(--error)'}">
+                                        ${game.availability === 'available' ? '✓' : '⏳'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <h3 style="margin-bottom: 1rem;">Cara Bermain</h3>
+                                <p style="line-height: 1.8;">${game.description}</p>
+                            </div>
+
+                            ${game.hasScoring && leaderboard.length > 0 ? `
+                                <div class="mb-2">
+                                    <h3 style="margin-bottom: 1rem;">🏆 Top Players</h3>
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 12px;">
+                                        ${leaderboard.slice(0, 3).map((player, idx) => `
+                                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; ${idx < leaderboard.length - 1 ? 'border-bottom: 1px solid var(--border-gray);' : ''}">
+                                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                                    <span style="font-size: 1.5rem; font-weight: 700; color: ${idx === 0 ? 'var(--gold)' : 'var(--royal-blue)'};">
+                                                        ${idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉'}
+                                                    </span>
+                                                    <span style="font-weight: 600;">${player.playerName}</span>
+                                                </div>
+                                                <span style="font-weight: 700; color: var(--royal-blue); font-size: 1.25rem;">
+                                                    ${player.score.toLocaleString()}
+                                                </span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                ${game.availability === 'available' ? `
+                                    <button class="btn btn-primary" onclick="closeModal(); showPage('booking');">
+                                        Book This Game
+                                    </button>
+                                ` : ''}
+                                <button class="btn btn-secondary" onclick="closeModal()">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('modalContainer').innerHTML = '';
+        }
+
+        function getBookingPage() {
+            return `
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Book a Table</h2>
+                        <p>Pilih tanggal dan waktu untuk reservasi meja</p>
+                    </div>
+
+                    <div class="booking-container">
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <h3 id="calendarMonth">January 2026</h3>
+                                <div class="calendar-nav">
+                                    <button onclick="changeMonth(-1)">‹</button>
+                                    <button onclick="changeMonth(1)">›</button>
+                                </div>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid">
+                                <!-- Calendar will be generated here -->
+                            </div>
+                        </div>
+
+                        <div class="booking-summary">
+                            <h3 style="margin-bottom: 1rem;">Booking Details</h3>
+                            
+                            <div class="form-group">
+                                <label>Selected Date</label>
+                                <input type="text" id="selectedDate" value="Pilih tanggal" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Time Slot</label>
+                                <div class="time-slots" id="timeSlots">
+                                    ${['14:00', '16:00', '18:00', '20:00', '22:00'].map(time => `
+                                        <div class="time-slot" onclick="selectTimeSlot('${time}')">${time}</div>
+                                    `).join('')}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Number of Guests</label>
+                                <select id="guestCount">
+                                    ${Array(8).fill(0).map((_, i) => `<option value="${i+1}">${i+1} ${i === 0 ? 'person' : 'people'}</option>`).join('')}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Table Preference</label>
+                                <select id="tablePreference">
+                                    <option value="">Any Available</option>
+                                    <option value="A">Table A (Corner, 4 seats)</option>
+                                    <option value="B">Table B (Window, 6 seats)</option>
+                                    <option value="C">Table C (Center, 4 seats)</option>
+                                    <option value="D">Table D (Private, 8 seats)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Special Requests (Optional)</label>
+                                <textarea id="specialRequests" placeholder="Game requests, celebration, etc..."></textarea>
+                            </div>
+
+                            <button class="btn btn-primary" style="width: 100%;" onclick="submitBooking()">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let currentMonth = new Date();
+        let selectedDate = null;
+        let selectedTime = null;
+
+        function initializeCalendar() {
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+            
+            document.getElementById('calendarMonth').textContent = 
+                currentMonth.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+
+            let html = '';
+            
+            // Day headers
+            ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].forEach(day => {
+                html += `<div class="calendar-day header">${day}</div>`;
+            });
+
+            // Empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day disabled"></div>';
+            }
+
+            // Days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const isPast = date < today.setHours(0, 0, 0, 0);
+                const isSelected = selectedDate && 
+                    selectedDate.getDate() === day && 
+                    selectedDate.getMonth() === month && 
+                    selectedDate.getFullYear() === year;
+
+                html += `
+                    <div class="calendar-day ${isPast ? 'disabled' : 'available'} ${isSelected ? 'selected' : ''}" 
+                         ${!isPast ? `onclick="selectDate(${year}, ${month}, ${day})"` : ''}>
+                        ${day}
+                    </div>
+                `;
+            }
+
+            document.getElementById('calendarGrid').innerHTML = html;
+        }
+
+        function changeMonth(delta) {
+            currentMonth.setMonth(currentMonth.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function selectDate(year, month, day) {
+            selectedDate = new Date(year, month, day);
+            renderCalendar();
+            document.getElementById('selectedDate').value = 
+                selectedDate.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function selectTimeSlot(time) {
+            selectedTime = time;
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function submitBooking() {
+            if (!selectedDate) {
+                showToast('Pilih tanggal terlebih dahulu', 'error');
+                return;
+            }
+            if (!selectedTime) {
+                showToast('Pilih waktu terlebih dahulu', 'error');
+                return;
+            }
+
+            const booking = {
+                id: Date.now(),
+                userId: currentUser.id,
+                userName: currentUser.name,
+                date: selectedDate.toISOString(),
+                time: selectedTime,
+                guests: document.getElementById('guestCount').value,
+                table: document.getElementById('tablePreference').value || 'Any',
+                specialRequests: document.getElementById('specialRequests').value,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+
+            const bookings = Storage.get('bookings') || [];
+            bookings.push(booking);
+            Storage.set('bookings', bookings);
+
+            // Update user stats
+            const users = Storage.get('users') || [];
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex].totalBookings = (users[userIndex].totalBookings || 0) + 1;
+                Storage.set('users', users);
+                currentUser = users[userIndex];
+                Storage.set('currentUser', currentUser);
+            }
+
+            showToast('Booking berhasil! Kami akan konfirmasi segera.', 'success');
+            showPage('profile');
+        }
+
+        function getLeaderboardPage() {
+            const games = Storage.get('games') || [];
+            const scoringGames = games.filter(g => g.hasScoring);
+
+            return `
+                <div class="container">
+                    <div class="leaderboard-container">
+                        <div class="leaderboard-header">
+                            <h2>🏆 Leaderboard</h2>
+                            <p style="opacity: 0.9; margin-top: 0.5rem;">Top players kompetisi board game</p>
+                            
+                            <div class="leaderboard-filters">
+                                <select id="gameSelect" onchange="loadLeaderboard(parseInt(this.value))" 
+                                        style="padding: 0.75rem 1rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                    ${scoringGames.map(game => `
+                                        <option value="${game.id}" ${game.id === 10 ? 'selected' : ''}>
+                                            ${game.title}
+                                        </option>
+                                    `).join('')}
+                                </select>
+                                
+                                <select style="padding: 0.75rem 1rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                    <option>All Time</option>
+                                    <option>This Month</option>
+                                    <option>This Week</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="leaderboardTable">
+                            <!-- Table will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadLeaderboard(gameId) {
+            const leaderboards = Storage.get('leaderboards') || {};
+            const leaderboard = leaderboards[gameId] || [];
+
+            if (leaderboard.length === 0) {
+                document.getElementById('leaderboardTable').innerHTML = `
+                    <div class="text-center" style="padding: 3rem;">
+                        <h3>Belum ada data leaderboard untuk game ini</h3>
+                        <p style="color: var(--text-gray); margin-top: 0.5rem;">Jadilah yang pertama!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHTML = `
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                            <th>Games</th>
+                            <th>Win Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${leaderboard.map(player => `
+                            <tr>
+                                <td class="rank-cell ${player.rank <= 3 ? 'top-3' : ''}">
+                                    ${player.rank <= 3 ? (player.rank === 1 ? '🥇' : player.rank === 2 ? '🥈' : '🥉') : player.rank}
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <div class="player-avatar">${player.playerName.charAt(0)}</div>
+                                        <strong>${player.playerName}</strong>
+                                    </div>
+                                </td>
+                                <td><strong>${player.score.toLocaleString()}</strong></td>
+                                <td>${player.gamesPlayed}</td>
+                                <td>${player.winRate}%</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('leaderboardTable').innerHTML = tableHTML;
+        }
+
+        function getProfilePage() {
+            const bookings = Storage.get('bookings') || [];
+            const userBookings = bookings.filter(b => b.userId === currentUser.id);
+
+            return `
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Profile</h2>
+                        <p>Informasi akun dan riwayat booking</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                        <div class="stat-card">
+                            <div class="player-avatar" style="width: 100px; height: 100px; font-size: 2.5rem; margin: 0 auto 1rem;">
+                                ${currentUser.name.charAt(0)}
+                            </div>
+                            <h3 style="text-align: center; margin-bottom: 0.5rem;">${currentUser.name}</h3>
+                            <p style="text-align: center; color: var(--text-gray);">${currentUser.email}</p>
+                            
+                            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-gray);">
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="color: var(--text-gray); font-size: 0.9rem;">Total Bookings</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--royal-blue);">
+                                        ${currentUser.totalBookings || 0}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="color: var(--text-gray); font-size: 0.9rem;">Total Visits</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--royal-blue);">
+                                        ${currentUser.totalVisits || 0}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            ${currentUser.role === 'admin' ? `
+                                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-gray);">
+                                    <div style="text-align: center;">
+                                        <div style="display: inline-block; padding: 0.5rem 1rem; background: var(--gold); color: var(--royal-blue-dark); border-radius: 20px; font-weight: 600; font-size: 0.85rem; margin-bottom: 1rem;">
+                                            👑 ADMIN
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary" style="width: 100%;" onclick="showChangePasswordModal()">
+                                        🔒 Change Password
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);">
+                            <h3 style="margin-bottom: 1.5rem;">Booking History</h3>
+                            
+                            ${userBookings.length > 0 ? `
+                                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                    ${userBookings.reverse().map(booking => {
+                                        const bookingDate = new Date(booking.date);
+                                        const statusColor = booking.status === 'confirmed' ? 'success' : 
+                                                          booking.status === 'cancelled' ? 'error' : 'royal-blue';
+                                        return `
+                                            <div style="padding: 1.5rem; background: var(--bg-light); border-radius: 12px; border-left: 4px solid var(--${statusColor});">
+                                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                                    <strong style="font-size: 1.1rem;">
+                                                        ${bookingDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}
+                                                    </strong>
+                                                    <span style="color: var(--${statusColor}); font-weight: 600; text-transform: uppercase; font-size: 0.85rem;">
+                                                        ${booking.status}
+                                                    </span>
+                                                </div>
+                                                <div style="color: var(--text-gray);">
+                                                    <div>⏰ ${booking.time}</div>
+                                                    <div>👥 ${booking.guests} guests</div>
+                                                    <div>🪑 Table ${booking.table}</div>
+                                                    ${booking.specialRequests ? `<div style="margin-top: 0.5rem; font-style: italic;">Note: ${booking.specialRequests}</div>` : ''}
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            ` : `
+                                <div class="text-center" style="padding: 3rem;">
+                                    <p style="color: var(--text-gray);">Belum ada booking</p>
+                                    <button class="btn btn-primary" style="margin-top: 1rem;" onclick="showPage('booking')">
+                                        Buat Booking Pertama
+                                    </button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getAdminPage() {
+            const games = Storage.get('games') || [];
+            const bookings = Storage.get('bookings') || [];
+            const users = Storage.get('users') || [];
+
+            const pendingBookings = bookings.filter(b => b.status === 'pending');
+            const todayBookings = bookings.filter(b => {
+                const bookingDate = new Date(b.date);
+                const today = new Date();
+                return bookingDate.toDateString() === today.toDateString();
+            });
+
+            return `
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Admin Dashboard</h2>
+                        <p>Kelola games, bookings, dan leaderboards</p>
+                    </div>
+
+                    <div class="admin-nav">
+                        <ul>
+                            <li><a href="#" class="active" onclick="showAdminSection('dashboard')">Dashboard</a></li>
+                            <li><a href="#" onclick="showAdminSection('games')">Games</a></li>
+                            <li><a href="#" onclick="showAdminSection('bookings')">Bookings</a></li>
+                            <li><a href="#" onclick="showAdminSection('leaderboards')">Leaderboards</a></li>
+                            <li><a href="#" onclick="showAdminSection('users')">Users</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="adminContent">
+                        <div class="admin-grid">
+                            <div class="stat-card">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎲</div>
+                                <div class="stat-value">${games.length}</div>
+                                <div class="stat-label">Total Games</div>
+                            </div>
+                            <div class="stat-card">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
+                                <div class="stat-value">${bookings.length}</div>
+                                <div class="stat-label">Total Bookings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏳</div>
+                                <div class="stat-value">${pendingBookings.length}</div>
+                                <div class="stat-label">Pending Bookings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                                <div class="stat-value">${users.length}</div>
+                                <div class="stat-label">Registered Users</div>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); margin-top: 2rem;">
+                            <h3 style="margin-bottom: 1.5rem;">Today's Bookings (${todayBookings.length})</h3>
+                            ${todayBookings.length > 0 ? `
+                                <table class="leaderboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Customer</th>
+                                            <th>Guests</th>
+                                            <th>Table</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${todayBookings.map(booking => `
+                                            <tr>
+                                                <td><strong>${booking.time}</strong></td>
+                                                <td>${booking.userName}</td>
+                                                <td>${booking.guests}</td>
+                                                <td>${booking.table}</td>
+                                                <td>
+                                                    <span style="color: var(--${booking.status === 'confirmed' ? 'success' : 'royal-blue'}); font-weight: 600;">
+                                                        ${booking.status}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    ${booking.status === 'pending' ? `
+                                                        <button class="btn btn-primary btn-small" onclick="confirmBooking(${booking.id})">
+                                                            Confirm
+                                                        </button>
+                                                    ` : '✓ Confirmed'}
+                                                </td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : `
+                                <p style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                                    Tidak ada booking untuk hari ini
+                                </p>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAdminSection(section) {
+            document.querySelectorAll('.admin-nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const content = document.getElementById('adminContent');
+            
+            switch(section) {
+                case 'dashboard':
+                    showAdminDashboard();
+                    break;
+                case 'games':
+                    showGamesManagement();
+                    break;
+                case 'bookings':
+                    showBookingsManagement();
+                    break;
+                case 'leaderboards':
+                    showLeaderboardsManagement();
+                    break;
+                case 'users':
+                    showUsersManagement();
+                    break;
+            }
+        }
+
+        function showAdminDashboard() {
+            const content = document.getElementById('adminContent');
+            const games = Storage.get('games') || [];
+            const bookings = Storage.get('bookings') || [];
+            const users = Storage.get('users') || [];
+            const pendingBookings = bookings.filter(b => b.status === 'pending');
+            const todayBookings = bookings.filter(b => {
+                const bookingDate = new Date(b.date);
+                const today = new Date();
+                return bookingDate.toDateString() === today.toDateString();
+            });
+
+            content.innerHTML = `
+                <div class="admin-grid">
+                    <div class="stat-card">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎲</div>
+                        <div class="stat-value">${games.length}</div>
+                        <div class="stat-label">Total Games</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
+                        <div class="stat-value">${bookings.length}</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⏳</div>
+                        <div class="stat-value">${pendingBookings.length}</div>
+                        <div class="stat-label">Pending Bookings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                        <div class="stat-value">${users.length}</div>
+                        <div class="stat-label">Registered Users</div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Today's Bookings (${todayBookings.length})</h3>
+                    ${todayBookings.length > 0 ? `
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Customer</th>
+                                    <th>Guests</th>
+                                    <th>Table</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${todayBookings.map(booking => `
+                                    <tr>
+                                        <td><strong>${booking.time}</strong></td>
+                                        <td>${booking.userName}</td>
+                                        <td>${booking.guests}</td>
+                                        <td>${booking.table}</td>
+                                        <td>
+                                            <span style="color: var(--${booking.status === 'confirmed' ? 'success' : 'royal-blue'}); font-weight: 600;">
+                                                ${booking.status}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            ${booking.status === 'pending' ? `
+                                                <button class="btn btn-primary btn-small" onclick="confirmBooking(${booking.id})">
+                                                    Confirm
+                                                </button>
+                                            ` : '✓ Confirmed'}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    ` : `
+                        <p style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                            Tidak ada booking untuk hari ini
+                        </p>
+                    `}
+                </div>
+            `;
+        }
+
+        function showGamesManagement() {
+            const content = document.getElementById('adminContent');
+            const games = Storage.get('games') || [];
+
+            content.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3>Games Management (${games.length})</h3>
+                        <button class="btn btn-primary" onclick="showAddGameModal()">
+                            ➕ Add New Game
+                        </button>
+                    </div>
+
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Game</th>
+                                <th>Category</th>
+                                <th>Players</th>
+                                <th>Time</th>
+                                <th>Complexity</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${games.map(game => `
+                                <tr>
+                                    <td><strong>${game.title}</strong></td>
+                                    <td>${game.category}</td>
+                                    <td>${game.minPlayers}-${game.maxPlayers}</td>
+                                    <td>${game.playTime}min</td>
+                                    <td>${'⭐'.repeat(game.complexity)}</td>
+                                    <td>
+                                        <span style="color: var(--${game.availability === 'available' ? 'success' : 'error'}); font-weight: 600;">
+                                            ${game.availability === 'available' ? '✓ Available' : '⏳ In Use'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary btn-small" onclick="editGame(${game.id})" style="margin-right: 0.5rem;">
+                                            ✏️ Edit
+                                        </button>
+                                        <button class="btn btn-secondary btn-small" onclick="deleteGame(${game.id})" style="background: var(--error); color: white; border: none;">
+                                            🗑️ Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function showAddGameModal(editGameId = null) {
+            const games = Storage.get('games') || [];
+            const game = editGameId ? games.find(g => g.id === editGameId) : null;
+            const isEdit = !!game;
+
+            const modal = document.getElementById('modalContainer');
+            modal.innerHTML = `
+                <div class="modal active" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        
+                        <div style="padding: 2rem;">
+                            <h3 style="margin-bottom: 1.5rem;">${isEdit ? '✏️ Edit Game' : '➕ Add New Game'}</h3>
+                            
+                            <form onsubmit="handleSaveGame(event, ${editGameId || 'null'})">
+                                <div class="form-group">
+                                    <label>Game Title *</label>
+                                    <input type="text" id="gameTitle" required value="${game?.title || ''}" placeholder="e.g., Wingspan">
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group">
+                                        <label>Category *</label>
+                                        <select id="gameCategory" required>
+                                            <option value="">Select Category</option>
+                                            ${['Strategy', 'Party', 'Family', 'Cooperative', 'Abstract', 'Thematic', 'Traditional'].map(cat => 
+                                                `<option value="${cat}" ${game?.category === cat ? 'selected' : ''}>${cat}</option>`
+                                            ).join('')}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Complexity (1-5) *</label>
+                                        <select id="gameComplexity" required>
+                                            ${[1,2,3,4,5].map(c => 
+                                                `<option value="${c}" ${game?.complexity === c ? 'selected' : ''}>${c} ${'⭐'.repeat(c)}</option>`
+                                            ).join('')}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group">
+                                        <label>Min Players *</label>
+                                        <input type="number" id="gameMinPlayers" required min="1" max="20" value="${game?.minPlayers || 1}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Max Players *</label>
+                                        <input type="number" id="gameMaxPlayers" required min="1" max="20" value="${game?.maxPlayers || 4}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Best At</label>
+                                        <input type="number" id="gameBestPlayers" min="1" max="20" value="${game?.bestPlayerCount || ''}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Play Time (minutes) *</label>
+                                    <input type="number" id="gamePlayTime" required min="5" max="999" value="${game?.playTime || 60}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="gameDescription" required rows="3" placeholder="Brief description of the game...">${game?.description || ''}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Mechanics (comma separated)</label>
+                                    <input type="text" id="gameMechanics" placeholder="e.g., Card Drafting, Engine Building" value="${game?.mechanics?.join(', ') || ''}">
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group">
+                                        <label>Availability *</label>
+                                        <select id="gameAvailability" required>
+                                            <option value="available" ${game?.availability === 'available' ? 'selected' : ''}>Available</option>
+                                            <option value="in-use" ${game?.availability === 'in-use' ? 'selected' : ''}>In Use</option>
+                                            <option value="maintenance" ${game?.availability === 'maintenance' ? 'selected' : ''}>Maintenance</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <input type="checkbox" id="gameHasScoring" ${game?.hasScoring ? 'checked' : ''}>
+                                            Has Scoring System
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                            <input type="checkbox" id="gameFeatured" ${game?.isFeatured ? 'checked' : ''}>
+                                            Featured Game
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                        ${isEdit ? 'Update Game' : 'Add Game'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function handleSaveGame(event, editGameId) {
+            event.preventDefault();
+            
+            const games = Storage.get('games') || [];
+            
+            const gameData = {
+                title: document.getElementById('gameTitle').value,
+                category: document.getElementById('gameCategory').value,
+                complexity: parseInt(document.getElementById('gameComplexity').value),
+                minPlayers: parseInt(document.getElementById('gameMinPlayers').value),
+                maxPlayers: parseInt(document.getElementById('gameMaxPlayers').value),
+                bestPlayerCount: parseInt(document.getElementById('gameBestPlayers').value) || null,
+                playTime: parseInt(document.getElementById('gamePlayTime').value),
+                description: document.getElementById('gameDescription').value,
+                mechanics: document.getElementById('gameMechanics').value.split(',').map(m => m.trim()).filter(m => m),
+                availability: document.getElementById('gameAvailability').value,
+                hasScoring: document.getElementById('gameHasScoring').checked,
+                isFeatured: document.getElementById('gameFeatured').checked
+            };
+
+            if (editGameId) {
+                // Edit existing game
+                const gameIndex = games.findIndex(g => g.id === editGameId);
+                if (gameIndex !== -1) {
+                    games[gameIndex] = { ...games[gameIndex], ...gameData };
+                    showToast('Updating game...', 'success');
+                }
+            } else {
+                // Add new game
+                const newGame = {
+                    id: Date.now(),
+                    ...gameData,
+                    timesPlayed: 0
+                };
+                games.push(newGame);
+                showToast('Adding game...', 'success');
+            }
+
+            await Storage.set('games', games);
+            closeModal();
+            showGamesManagement();
+            showToast(editGameId ? 'Game updated!' : 'Game added!', 'success');
+        }
+
+        function editGame(gameId) {
+            showAddGameModal(gameId);
+        }
+
+        function deleteGame(gameId) {
+            const games = Storage.get('games') || [];
+            const game = games.find(g => g.id === gameId);
+            
+            if (confirm(`Delete "${game.title}"? This action cannot be undone.`)) {
+                const updatedGames = games.filter(g => g.id !== gameId);
+                Storage.set('games', updatedGames);
+                showToast('Game deleted successfully!', 'success');
+                showGamesManagement();
+            }
+        }
+
+        function showBookingsManagement() {
+            const content = document.getElementById('adminContent');
+            const bookings = Storage.get('bookings') || [];
+
+            content.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);">
+                    <h3 style="margin-bottom: 1.5rem;">All Bookings (${bookings.length})</h3>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="margin-right: 1rem;">Filter by Status:</label>
+                        <select id="bookingStatusFilter" onchange="filterBookingsByStatus()" style="padding: 0.5rem; border: 2px solid var(--border-gray); border-radius: 8px;">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div id="bookingsTableContainer">
+                        ${renderBookingsTable(bookings)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBookingsTable(bookings) {
+            if (bookings.length === 0) {
+                return '<p style="text-align: center; color: var(--text-gray); padding: 2rem;">Belum ada booking</p>';
+            }
+
+            return `
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Customer</th>
+                            <th>Contact</th>
+                            <th>Guests</th>
+                            <th>Table</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${bookings.slice().reverse().map(booking => {
+                            const date = new Date(booking.date);
+                            const statusColor = booking.status === 'confirmed' ? 'success' : 
+                                              booking.status === 'cancelled' ? 'error' : 
+                                              booking.status === 'completed' ? 'royal-blue' : 'gold';
+                            
+                            return `
+                                <tr>
+                                    <td>${date.toLocaleDateString('id-ID')}</td>
+                                    <td><strong>${booking.time}</strong></td>
+                                    <td>${booking.userName}</td>
+                                    <td style="font-size: 0.85rem;">${getUserPhone(booking.userId)}</td>
+                                    <td>${booking.guests}</td>
+                                    <td>${booking.table}</td>
+                                    <td>
+                                        <span style="color: var(--${statusColor}); font-weight: 600; text-transform: uppercase; font-size: 0.85rem;">
+                                            ${booking.status}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        ${booking.status === 'pending' ? `
+                                            <button class="btn btn-primary btn-small" onclick="updateBookingStatus(${booking.id}, 'confirmed')" style="margin-right: 0.25rem;">
+                                                ✓
+                                            </button>
+                                            <button class="btn btn-secondary btn-small" onclick="updateBookingStatus(${booking.id}, 'cancelled')" style="background: var(--error); color: white; border: none;">
+                                                ✕
+                                            </button>
+                                        ` : booking.status === 'confirmed' ? `
+                                            <button class="btn btn-secondary btn-small" onclick="updateBookingStatus(${booking.id}, 'completed')">
+                                                ✓ Complete
+                                            </button>
+                                        ` : booking.status === 'completed' ? '✓ Done' : 'Cancelled'}
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function getUserPhone(userId) {
+            const users = Storage.get('users') || [];
+            const user = users.find(u => u.id === userId);
+            return user?.phone || '-';
+        }
+
+        function filterBookingsByStatus() {
+            const status = document.getElementById('bookingStatusFilter').value;
+            const bookings = Storage.get('bookings') || [];
+            const filtered = status ? bookings.filter(b => b.status === status) : bookings;
+            document.getElementById('bookingsTableContainer').innerHTML = renderBookingsTable(filtered);
+        }
+
+        function updateBookingStatus(bookingId, newStatus) {
+            const bookings = Storage.get('bookings') || [];
+            const bookingIndex = bookings.findIndex(b => b.id === bookingId);
+            
+            if (bookingIndex !== -1) {
+                bookings[bookingIndex].status = newStatus;
+                Storage.set('bookings', bookings);
+                showToast(`Booking ${newStatus}!`, 'success');
+                showBookingsManagement();
+            }
+        }
+
+        function showLeaderboardsManagement() {
+            const content = document.getElementById('adminContent');
+            const games = Storage.get('games') || [];
+            const scoringGames = games.filter(g => g.hasScoring);
+            const leaderboards = Storage.get('leaderboards') || {};
+
+            content.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3>Leaderboard Management</h3>
+                        <button class="btn btn-primary" onclick="showAddScoreModal()">
+                            ➕ Add Score
+                        </button>
+                    </div>
+
+                    <div class="form-group" style="max-width: 400px;">
+                        <label>Select Game</label>
+                        <select id="leaderboardGameSelect" onchange="loadLeaderboardScores()" style="padding: 0.75rem; border: 2px solid var(--border-gray); border-radius: 8px; width: 100%;">
+                            <option value="">Choose a game...</option>
+                            ${scoringGames.map(game => 
+                                `<option value="${game.id}">${game.title}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+
+                    <div id="leaderboardScoresContainer" style="margin-top: 2rem;">
+                        <p style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                            Select a game to view and manage scores
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadLeaderboardScores() {
+            const gameId = parseInt(document.getElementById('leaderboardGameSelect').value);
+            if (!gameId) return;
+
+            const leaderboards = Storage.get('leaderboards') || {};
+            const scores = leaderboards[gameId] || [];
+            const container = document.getElementById('leaderboardScoresContainer');
+
+            if (scores.length === 0) {
+                container.innerHTML = `
+                    <p style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                        No scores recorded for this game yet
+                    </p>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>High Score</th>
+                            <th>Games Played</th>
+                            <th>Win Rate</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${scores.map(player => `
+                            <tr>
+                                <td class="rank-cell ${player.rank <= 3 ? 'top-3' : ''}">
+                                    ${player.rank <= 3 ? (player.rank === 1 ? '🥇' : player.rank === 2 ? '🥈' : '🥉') : player.rank}
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <div class="player-avatar">${player.playerName.charAt(0)}</div>
+                                        <strong>${player.playerName}</strong>
+                                    </div>
+                                </td>
+                                <td><strong>${player.score.toLocaleString()}</strong></td>
+                                <td>${player.gamesPlayed}</td>
+                                <td>${player.winRate}%</td>
+                                <td>
+                                    <button class="btn btn-secondary btn-small" onclick="editScore(${gameId}, ${player.userId})">
+                                        ✏️
+                                    </button>
+                                    <button class="btn btn-secondary btn-small" onclick="deleteScore(${gameId}, ${player.userId})" style="background: var(--error); color: white; border: none; margin-left: 0.25rem;">
+                                        🗑️
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function showAddScoreModal(editData = null) {
+            const games = Storage.get('games') || [];
+            const scoringGames = games.filter(g => g.hasScoring);
+            const users = Storage.get('users') || [];
+
+            const modal = document.getElementById('modalContainer');
+            modal.innerHTML = `
+                <div class="modal active" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 500px;">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        
+                        <div style="padding: 2rem;">
+                            <h3 style="margin-bottom: 1.5rem;">${editData ? '✏️ Edit Score' : '➕ Add Score'}</h3>
+                            
+                            <form onsubmit="handleSaveScore(event, ${editData ? JSON.stringify(editData).replace(/"/g, '&quot;') : 'null'})">
+                                <div class="form-group">
+                                    <label>Game *</label>
+                                    <select id="scoreGameId" required ${editData ? 'disabled' : ''}>
+                                        <option value="">Select Game</option>
+                                        ${scoringGames.map(game => 
+                                            `<option value="${game.id}" ${editData?.gameId === game.id ? 'selected' : ''}>${game.title}</option>`
+                                        ).join('')}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Player Name *</label>
+                                    <input type="text" id="scorePlayerName" required value="${editData?.playerName || ''}" placeholder="Enter player name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Score *</label>
+                                    <input type="number" id="scoreValue" required min="0" value="${editData?.score || ''}" placeholder="Enter score">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Games Played *</label>
+                                    <input type="number" id="scoreGamesPlayed" required min="1" value="${editData?.gamesPlayed || 1}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Win Rate (%) *</label>
+                                    <input type="number" id="scoreWinRate" required min="0" max="100" value="${editData?.winRate || 0}">
+                                </div>
+
+                                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                        ${editData ? 'Update' : 'Add'} Score
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleSaveScore(event, editData) {
+            event.preventDefault();
+            
+            const gameId = parseInt(document.getElementById('scoreGameId').value);
+            const playerName = document.getElementById('scorePlayerName').value;
+            const score = parseInt(document.getElementById('scoreValue').value);
+            const gamesPlayed = parseInt(document.getElementById('scoreGamesPlayed').value);
+            const winRate = parseInt(document.getElementById('scoreWinRate').value);
+
+            const leaderboards = Storage.get('leaderboards') || {};
+            if (!leaderboards[gameId]) {
+                leaderboards[gameId] = [];
+            }
+
+            const scoreData = {
+                userId: editData ? editData.userId : Date.now(),
+                playerName,
+                score,
+                gamesPlayed,
+                winRate,
+                rank: 1 // Will be recalculated
+            };
+
+            if (editData) {
+                // Update existing score
+                const index = leaderboards[gameId].findIndex(s => s.userId === editData.userId);
+                if (index !== -1) {
+                    leaderboards[gameId][index] = scoreData;
+                }
+            } else {
+                // Add new score
+                leaderboards[gameId].push(scoreData);
+            }
+
+            // Recalculate ranks
+            leaderboards[gameId].sort((a, b) => b.score - a.score);
+            leaderboards[gameId].forEach((player, idx) => {
+                player.rank = idx + 1;
+            });
+
+            Storage.set('leaderboards', leaderboards);
+            closeModal();
+            showToast(editData ? 'Score updated!' : 'Score added!', 'success');
+            
+            // Reload if we're on leaderboards page
+            if (document.getElementById('leaderboardGameSelect')) {
+                document.getElementById('leaderboardGameSelect').value = gameId;
+                loadLeaderboardScores();
+            }
+        }
+
+        function editScore(gameId, userId) {
+            const leaderboards = Storage.get('leaderboards') || {};
+            const player = leaderboards[gameId]?.find(s => s.userId === userId);
+            if (player) {
+                showAddScoreModal({ ...player, gameId });
+            }
+        }
+
+        function deleteScore(gameId, userId) {
+            const leaderboards = Storage.get('leaderboards') || {};
+            const player = leaderboards[gameId]?.find(s => s.userId === userId);
+            
+            if (confirm(`Delete score for ${player.playerName}?`)) {
+                leaderboards[gameId] = leaderboards[gameId].filter(s => s.userId !== userId);
+                
+                // Recalculate ranks
+                leaderboards[gameId].sort((a, b) => b.score - a.score);
+                leaderboards[gameId].forEach((player, idx) => {
+                    player.rank = idx + 1;
+                });
+                
+                Storage.set('leaderboards', leaderboards);
+                showToast('Score deleted!', 'success');
+                loadLeaderboardScores();
+            }
+        }
+
+        function showUsersManagement() {
+            const content = document.getElementById('adminContent');
+            const users = Storage.get('users') || [];
+            const customers = users.filter(u => u.role !== 'admin');
+            const admins = users.filter(u => u.role === 'admin');
+
+            content.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Admin Users (${admins.length})</h3>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${admins.map(user => `
+                                <tr>
+                                    <td><strong>${user.name}</strong></td>
+                                    <td>${user.email}</td>
+                                    <td>${user.username || '-'}</td>
+                                    <td>${user.phone || '-'}</td>
+                                    <td>
+                                        <span style="background: var(--gold); color: var(--royal-blue-dark); padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
+                                            👑 ADMIN
+                                        </span>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);">
+                    <h3 style="margin-bottom: 1.5rem;">Customer Users (${customers.length})</h3>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total Bookings</th>
+                                <th>Total Visits</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${customers.map(user => `
+                                <tr>
+                                    <td>
+                                        <div class="player-info">
+                                            <div class="player-avatar">${user.name.charAt(0)}</div>
+                                            <strong>${user.name}</strong>
+                                        </div>
+                                    </td>
+                                    <td>${user.email}</td>
+                                    <td>${user.phone || '-'}</td>
+                                    <td>${user.totalBookings || 0}</td>
+                                    <td>${user.totalVisits || 0}</td>
+                                    <td style="font-size: 0.85rem;">${new Date(user.createdAt).toLocaleDateString('id-ID')}</td>
+                                    <td>
+                                        <button class="btn btn-secondary btn-small" onclick="viewUserDetail(${user.id})">
+                                            👁️ View
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function viewUserDetail(userId) {
+            const users = Storage.get('users') || [];
+            const bookings = Storage.get('bookings') || [];
+            const user = users.find(u => u.id === userId);
+            const userBookings = bookings.filter(b => b.userId === userId);
+
+            const modal = document.getElementById('modalContainer');
+            modal.innerHTML = `
+                <div class="modal active" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        
+                        <div style="padding: 2rem;">
+                            <div style="text-align: center; margin-bottom: 2rem;">
+                                <div class="player-avatar" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1rem;">
+                                    ${user.name.charAt(0)}
+                                </div>
+                                <h3 style="margin-bottom: 0.5rem;">${user.name}</h3>
+                                <p style="color: var(--text-gray);">${user.email}</p>
+                            </div>
+
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div>
+                                        <div style="color: var(--text-gray); font-size: 0.9rem;">Phone</div>
+                                        <div style="font-weight: 600;">${user.phone || '-'}</div>
+                                    </div>
+                                    <div>
+                                        <div style="color: var(--text-gray); font-size: 0.9rem;">Joined</div>
+                                        <div style="font-weight: 600;">${new Date(user.createdAt).toLocaleDateString('id-ID')}</div>
+                                    </div>
+                                    <div>
+                                        <div style="color: var(--text-gray); font-size: 0.9rem;">Total Bookings</div>
+                                        <div style="font-weight: 600; color: var(--royal-blue);">${user.totalBookings || 0}</div>
+                                    </div>
+                                    <div>
+                                        <div style="color: var(--text-gray); font-size: 0.9rem;">Total Visits</div>
+                                        <div style="font-weight: 600; color: var(--royal-blue);">${user.totalVisits || 0}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 style="margin-bottom: 1rem;">Recent Bookings</h4>
+                            ${userBookings.length > 0 ? `
+                                <div style="max-height: 300px; overflow-y: auto;">
+                                    ${userBookings.slice(0, 5).map(booking => {
+                                        const date = new Date(booking.date);
+                                        const statusColor = booking.status === 'confirmed' ? 'success' : 
+                                                          booking.status === 'cancelled' ? 'error' : 'royal-blue';
+                                        return `
+                                            <div style="padding: 1rem; background: var(--bg-light); border-radius: 8px; margin-bottom: 0.5rem; border-left: 3px solid var(--${statusColor});">
+                                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                                                    <strong>${date.toLocaleDateString('id-ID')}</strong>
+                                                    <span style="color: var(--${statusColor}); font-weight: 600; font-size: 0.85rem; text-transform: uppercase;">
+                                                        ${booking.status}
+                                                    </span>
+                                                </div>
+                                                <div style="font-size: 0.9rem; color: var(--text-gray);">
+                                                    ${booking.time} • ${booking.guests} guests • Table ${booking.table}
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            ` : `
+                                <p style="text-align: center; color: var(--text-gray); padding: 2rem;">No bookings yet</p>
+                            `}
+
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="closeModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAllBookings() {
+            showBookingsManagement();
+        }
+        function confirmBooking(bookingId) {
+            const bookings = Storage.get('bookings') || [];
+            const bookingIndex = bookings.findIndex(b => b.id === bookingId);
+            
+            if (bookingIndex !== -1) {
+                bookings[bookingIndex].status = 'confirmed';
+                Storage.set('bookings', bookings);
+                showToast('Booking confirmed!', 'success');
+                
+                // Reload current admin view
+                if (document.querySelector('.admin-nav')) {
+                    showAdminDashboard();
+                } else {
+                    showPage('admin');
+                }
+            }
+        }
+
+        function getAuthPage() {
+            return `
+                <div class="auth-container">
+                    <div class="auth-box">
+                        <div class="auth-header">
+                            <h2>Welcome Back</h2>
+                            <p style="color: var(--text-gray);">Login ke akun Papan Hobbies</p>
+                        </div>
+
+                        <button onclick="handleGoogleLogin()" class="btn" style="width: 100%; background: white; color: var(--text-dark); border: 2px solid var(--border-gray); display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Continue with Google
+                        </button>
+
+                        <div style="text-align: center; margin: 1.5rem 0; color: var(--text-gray); position: relative;">
+                            <span style="background: white; padding: 0 1rem; position: relative; z-index: 1;">atau</span>
+                            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border-gray); z-index: 0;"></div>
+                        </div>
+
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label>Email / Username</label>
+                                <input type="text" id="loginEmail" required placeholder="email@example.com atau username">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="loginPassword" required placeholder="••••••••">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                Login
+                            </button>
+                        </form>
+
+                        <div class="auth-toggle">
+                            Belum punya akun? <a href="#" onclick="showRegister()">Register</a>
+                        </div>
+
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-gray);">
+                            <div style="text-align: center; margin-bottom: 1rem;">
+                                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">🔐 Admin Access:</p>
+                                <p style="font-size: 0.85rem; color: var(--text-gray);">
+                                    <strong>Email:</strong> papan.hobbies@gmail.com<br>
+                                    <strong>Password:</strong> PapanHobbies2026!
+                                </p>
+                                <p style="font-size: 0.8rem; color: var(--text-gray); font-style: italic; margin-top: 0.5rem;">
+                                    (Password dapat diubah di Profile setelah login)
+                                </p>
+                            </div>
+                            <div style="text-align: center;">
+                                <a href="#" onclick="resetLocalStorage(); return false;" style="color: var(--text-gray); font-size: 0.85rem; text-decoration: none;">
+                                    🔄 Reset Data (jika ada masalah login)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function resetLocalStorage() {
+            if (confirm('Reset semua data? Anda akan logout dan semua data lokal akan dihapus.')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                currentUser = null;
+                updateAuthUI();
+                showToast('Data berhasil direset. Silakan refresh halaman.', 'success');
+                setTimeout(() => location.reload(), 1500);
+            }
+        }
+
+        function showChangePasswordModal() {
+            const modal = document.getElementById('modalContainer');
+            modal.innerHTML = `
+                <div class="modal active" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 500px;">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        
+                        <div style="padding: 2rem;">
+                            <h3 style="margin-bottom: 1.5rem; text-align: center;">🔒 Change Password</h3>
+                            
+                            <form onsubmit="handleChangePassword(event)">
+                                <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input type="password" id="currentPassword" required placeholder="Enter current password">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" id="newPassword" required minlength="6" placeholder="Enter new password (min 6 characters)">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" required minlength="6" placeholder="Confirm new password">
+                                </div>
+                                
+                                <div style="display: flex; gap: 1rem;">
+                                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                        Update Password
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleChangePassword(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate current password
+            if (currentPassword !== currentUser.password) {
+                showToast('Current password is incorrect', 'error');
+                return;
+            }
+            
+            // Validate new password match
+            if (newPassword !== confirmPassword) {
+                showToast('New passwords do not match', 'error');
+                return;
+            }
+            
+            // Validate password length
+            if (newPassword.length < 6) {
+                showToast('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            // Update password
+            const users = Storage.get('users') || [];
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                Storage.set('users', users);
+                
+                // Update current user
+                currentUser.password = newPassword;
+                Storage.set('currentUser', currentUser);
+                
+                closeModal();
+                showToast('Password successfully updated!', 'success');
+            } else {
+                showToast('Error updating password', 'error');
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const emailOrUsername = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            console.log('🔐 Login attempt:', { emailOrUsername, passwordLength: password.length });
+
+            const users = Storage.get('users') || [];
+            console.log('👥 Total users in database:', users.length);
+            
+            const user = users.find(u => {
+                const matchUsername = u.username && u.username.toLowerCase() === emailOrUsername.toLowerCase();
+                const matchEmail = u.email && u.email.toLowerCase() === emailOrUsername.toLowerCase();
+                const matchPassword = u.password === password;
+                
+                console.log('Checking user:', {
+                    email: u.email,
+                    username: u.username,
+                    role: u.role,
+                    matchUsername,
+                    matchEmail,
+                    matchPassword
+                });
+                
+                return (matchUsername || matchEmail) && matchPassword;
+            });
+
+            if (user) {
+                console.log('✅ Login successful:', user.email, 'Role:', user.role);
+                currentUser = user;
+                Storage.set('currentUser', user);
+                updateAuthUI();
+                
+                // Check if there's a return page
+                const returnPage = sessionStorage.getItem('returnPage');
+                if (returnPage) {
+                    sessionStorage.removeItem('returnPage');
+                    showPage(returnPage);
+                } else {
+                    showPage('home');
+                }
+                showToast(`Welcome back, ${user.name}!`, 'success');
+            } else {
+                console.log('❌ Login failed: Invalid credentials');
+                showToast('Email/Username atau password salah', 'error');
+            }
+        }
+
+        async function handleGoogleLogin() {
+            // OFFLINE MODE: Use simulated Google login
+            if (!isFirebaseReady) {
+                console.log('📱 Using simulated Google login (offline mode)');
+                showGoogleEmailModal();
+                return;
+            }
+
+            // ONLINE MODE: Use real Firebase Google Auth
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                provider.setCustomParameters({
+                    prompt: 'select_account'
+                });
+                
+                showToast('Opening Google Sign-In...', 'success');
+                const result = await firebaseAuth.signInWithPopup(provider);
+                
+                // User signed in successfully
+                const user = result.user;
+                console.log('✅ Google Sign-In successful:', user.email);
+                
+                // Process the authenticated user
+                await processFirebaseUser(user);
+                
+            } catch (error) {
+                console.error('Google Sign-In error:', error);
+                
+                if (error.code === 'auth/popup-blocked') {
+                    showToast('Popup blocked! Please allow popups for this site.', 'error');
+                } else if (error.code === 'auth/popup-closed-by-user') {
+                    showToast('Sign-in cancelled', 'error');
+                } else {
+                    showToast('Sign-in failed: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // Simulated Google Login for offline mode
+        function showGoogleEmailModal() {
+            const modal = document.getElementById('modalContainer');
+            modal.innerHTML = `
+                <div class="modal active" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 500px;">
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                        
+                        <div style="padding: 2rem; text-align: center;">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #4285F4, #34A853); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                            </div>
+                            
+                            <h3 style="margin-bottom: 0.5rem;">Sign in with Google</h3>
+                            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Offline Mode - Simulated Auth</p>
+                            <p style="color: var(--text-gray); margin-bottom: 2rem;">Masukkan Gmail address untuk login/register</p>
+                            
+                            <form onsubmit="handleSimulatedGoogleLogin(event)">
+                                <div class="form-group" style="text-align: left;">
+                                    <label>Gmail Address</label>
+                                    <input type="email" id="googleEmailOffline" required placeholder="nama@gmail.com" pattern=".+@gmail\\.com">
+                                    <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
+                                        💡 Any @gmail.com email works in offline mode
+                                    </small>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                    Continue
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function handleSimulatedGoogleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('googleEmailOffline').value;
+            
+            if (!email.endsWith('@gmail.com')) {
+                showToast('Please use a valid Gmail address', 'error');
+                return;
+            }
+
+            const users = Storage.get('users') || [];
+            let user = users.find(u => u.email === email);
+
+            if (!user) {
+                // Create new account
+                const name = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                
+                user = {
+                    id: Date.now(),
+                    email: email,
+                    name: name,
+                    role: 'customer',
+                    phone: '',
+                    loginMethod: 'google',
+                    totalVisits: 0,
+                    totalBookings: 0,
+                    createdAt: new Date().toISOString()
+                };
+
+                users.push(user);
+                await Storage.set('users', users);
+                console.log('✅ New user created (offline):', user.email);
+            }
+
+            currentUser = user;
+            Storage.set('currentUser', user);
+            updateAuthUI();
+            closeModal();
+            
+            // Check if there's a return page
+            const returnPage = sessionStorage.getItem('returnPage');
+            if (returnPage) {
+                sessionStorage.removeItem('returnPage');
+                showPage(returnPage);
+            } else {
+                showPage('home');
+            }
+            
+            showToast(`Welcome, ${user.name}!`, 'success');
+        }
+
+        async function processFirebaseUser(firebaseUser) {
+            const users = Storage.get('users') || [];
+            let user = users.find(u => u.email === firebaseUser.email);
+
+            if (!user) {
+                // Create new account for Google user
+                user = {
+                    id: Date.now(),
+                    email: firebaseUser.email,
+                    name: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+                    photoURL: firebaseUser.photoURL,
+                    role: 'customer',
+                    phone: firebaseUser.phoneNumber || '',
+                    loginMethod: 'google',
+                    firebaseUid: firebaseUser.uid,
+                    totalVisits: 0,
+                    totalBookings: 0,
+                    createdAt: new Date().toISOString()
+                };
+
+                users.push(user);
+                await Storage.set('users', users);
+                console.log('✅ New user created:', user.email);
+            }
+
+            currentUser = user;
+            Storage.set('currentUser', user);
+            updateAuthUI();
+            
+            // Check if there's a return page
+            const returnPage = sessionStorage.getItem('returnPage');
+            if (returnPage) {
+                sessionStorage.removeItem('returnPage');
+                showPage(returnPage);
+            } else {
+                showPage('home');
+            }
+            
+            showToast(`Welcome, ${user.name}!`, 'success');
+        }
+
+        // Firebase Auth State Listener
+        if (isFirebaseReady) {
+            firebaseAuth.onAuthStateChanged(async (firebaseUser) => {
+                if (firebaseUser && !currentUser) {
+                    console.log('🔐 Auth state changed:', firebaseUser.email);
+                    // User is signed in from previous session
+                    await processFirebaseUser(firebaseUser);
+                }
+            });
+        }
+
+        function showRegister() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-box">
+                        <div class="auth-header">
+                            <h2>Create Account</h2>
+                            <p style="color: var(--text-gray);">Daftar untuk booking dan leaderboard</p>
+                        </div>
+
+                        <button onclick="handleGoogleLogin()" class="btn" style="width: 100%; background: white; color: var(--text-dark); border: 2px solid var(--border-gray); display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Sign up with Google
+                        </button>
+
+                        <div style="text-align: center; margin: 1.5rem 0; color: var(--text-gray); position: relative;">
+                            <span style="background: white; padding: 0 1rem; position: relative; z-index: 1;">atau</span>
+                            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border-gray); z-index: 0;"></div>
+                        </div>
+
+                        <form onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="regName" required placeholder="Your name">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="regEmail" required placeholder="email@example.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="regPhone" required placeholder="+62 XXX-XXXX-XXXX">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="regPassword" required placeholder="••••••••" minlength="6">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                Register
+                            </button>
+                        </form>
+
+                        <div class="auth-toggle">
+                            Sudah punya akun? <a href="#" onclick="showPage('auth')">Login</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const password = document.getElementById('regPassword').value;
+
+            const users = Storage.get('users') || [];
+            
+            // Check if email already exists
+            if (users.find(u => u.email === email)) {
+                showToast('Email sudah terdaftar', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                phone,
+                password,
+                role: 'customer',
+                totalVisits: 0,
+                totalBookings: 0,
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            Storage.set('users', users);
+
+            currentUser = newUser;
+            Storage.set('currentUser', newUser);
+            updateAuthUI();
+            
+            // Check if there's a return page
+            const returnPage = sessionStorage.getItem('returnPage');
+            if (returnPage) {
+                sessionStorage.removeItem('returnPage');
+                showPage(returnPage);
+            } else {
+                showPage('home');
+            }
+            showToast('Registrasi berhasil! Welcome to Papan Hobbies!', 'success');
+        }
+
+        // Initialize app
+        async function initApp() {
+            try {
+                // Show loading indicator
+                document.body.insertAdjacentHTML('afterbegin', `
+                    <div id="appLoader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 61, 130, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; color: white;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎲</div>
+                        <h2 style="color: white; margin-bottom: 0.5rem;">Papan Hobbies Cafe</h2>
+                        <p style="opacity: 0.9;">Loading...</p>
+                        <div class="spinner" style="margin-top: 2rem;"></div>
+                    </div>
+                `);
+                
+                // Initialize data with Firebase sync
+                await initializeData();
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Load homepage
+                showPage('home');
+                
+                // Remove loader
+                setTimeout(() => {
+                    const loader = document.getElementById('appLoader');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        loader.style.transition = 'opacity 0.3s ease';
+                        setTimeout(() => loader.remove(), 300);
+                    }
+                }, 800);
+                
+                console.log('✅ App initialized successfully');
+                
+            } catch (error) {
+                console.error('❌ App initialization error:', error);
+                showToast('Error loading app. Please refresh.', 'error');
+            }
+        }
+        
+        // Start app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+    </script>
+</body>
+</html>
